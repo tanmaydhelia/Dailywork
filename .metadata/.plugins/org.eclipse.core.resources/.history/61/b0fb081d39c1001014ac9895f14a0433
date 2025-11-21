@@ -1,0 +1,5 @@
+package com.chubb.request;
+
+public class Order {
+
+}

@@ -1,0 +1,13 @@
+package com.flightapp.dto;
+
+import com.flightapp.entity.Gender;
+import com.flightapp.entity.MealType;
+
+public class PassengerDto {
+	private String name;
+	private Gender gender;
+	private int age;
+	private MealType mealType;
+	private String seatNumber;
+	
+}

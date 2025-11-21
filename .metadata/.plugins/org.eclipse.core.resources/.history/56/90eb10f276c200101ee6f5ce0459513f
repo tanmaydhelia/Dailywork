@@ -1,0 +1,48 @@
+package com.flight.entity;
+
+import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+@Entity
+public class Flight {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Airline airline;
+	
+	@NotBlank
+	private String fromAirport;
+	
+	@NotBlank
+	private String toAirport;
+	
+	@NotNull
+	@DateTimeFormat(pattern = "dd/mm/yy hh:mm:ss a")
+	private LocalDateTime departureTime;
+	
+	@NotNull
+	@DateTimeFormat(pattern = "dd/mm/yy hh:mm:ss a")
+	private LocalDateTime arrivalTime;
+	
+	private int price;
+	
+	private int totalSeats;
+	
+	private int availableSeats;
+	
+	private FlightStatus status;
+}

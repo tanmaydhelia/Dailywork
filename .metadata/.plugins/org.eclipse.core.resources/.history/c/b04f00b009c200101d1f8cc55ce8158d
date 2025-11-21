@@ -1,0 +1,53 @@
+	package com.chubb.controller;
+
+import java.lang.System.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.chubb.request.Customer;
+import com.chubb.request.Order1;
+import com.chubb.service.CustomerService;
+import com.chubb.service.OrderService;
+
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RestController
+public class OrderController {
+
+    private final CustomerService customerService;
+	
+	@Autowired
+	OrderService service;
+
+    OrderController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+	
+	@GetMapping("/order")
+	public String getOrder() {
+		// TODO Auto-generated method stub
+		return "Order GET req!!!";
+	}
+	
+	@PostMapping("/order")
+	Order1 saveOrder(@RequestBody @Valid Order1 order) {
+		log.debug("Logger Added");
+		service.insertOrder(order);
+		return order;
+	}
+	
+	@PostMapping("/customer")
+	public Customer createCustomer(@RequestBody @Valid Customer customer ) {
+		log.debug("Customer Added");
+		customerService.saveCustomer(customer);
+		return customer;
+	}
+	
+	
+}

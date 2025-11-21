@@ -1,0 +1,7 @@
+package com.flightapp.service.impl;
+
+import com.flightapp.service.AdminService;
+
+public class AdminServiceImpl implements AdminService{
+	
+}

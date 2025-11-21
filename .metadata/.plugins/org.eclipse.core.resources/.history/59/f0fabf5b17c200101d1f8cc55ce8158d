@@ -1,0 +1,19 @@
+package com.chubb.request;
+
+import org.junit.jupiter.api.Test;
+
+public class Order1Test {
+
+	@Test
+	void testOrderProperties() {
+		Order1 order = new Order1();
+		order.setItem("Test Item");
+		order.setPrice(1000);
+		order.setQuantity(2);
+		
+		assertEquals("Test Item", order.getItem());
+        assertEquals(100, order.getPrice());
+        assertEquals(2, order.getQuantity());
+		
+	}
+}

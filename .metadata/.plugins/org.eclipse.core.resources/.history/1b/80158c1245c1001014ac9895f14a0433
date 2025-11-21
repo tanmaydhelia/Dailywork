@@ -1,0 +1,10 @@
+package com.chubb;
+
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+public class GlobalErrorHandler {
+	@ExceptionHandler
+	public void handlerException(MethodArgumentNotValidException e) {
+		
+	}
+}

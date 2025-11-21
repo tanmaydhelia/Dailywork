@@ -1,0 +1,12 @@
+package com.flightapp.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+
+public class AirlineInventoryRequest {
+	
+	@NotBlank
+	private String airlineCode;
+	
+	@NotEmpty
+}

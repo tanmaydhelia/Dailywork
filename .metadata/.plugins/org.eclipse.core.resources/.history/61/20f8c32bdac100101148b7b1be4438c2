@@ -1,0 +1,5 @@
+package com.chubb.repository;
+
+public interface OrderRepository {
+
+}

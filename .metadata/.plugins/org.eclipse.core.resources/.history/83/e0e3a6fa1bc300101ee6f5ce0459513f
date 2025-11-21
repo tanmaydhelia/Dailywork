@@ -1,0 +1,23 @@
+package com.flightapp.service.impl;
+
+import org.springframework.stereotype.Service;
+
+import com.flightapp.repository.AirlineRepository;
+import com.flightapp.repository.FlightRepository;
+import com.flightapp.service.AdminService;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+public class AdminServiceImpl implements AdminService{
+	private final AirlineRepository airlineRepositroy;
+	private final FlightRepository flightRepository;
+	
+	public AdminServiceImpl(AirlineRepository airlineRepositroy, FlightRepository flightRepository) {
+		this.airlineRepositroy = airlineRepositroy;
+		this.flightRepository = flightRepository;
+	}
+	
+	
+}

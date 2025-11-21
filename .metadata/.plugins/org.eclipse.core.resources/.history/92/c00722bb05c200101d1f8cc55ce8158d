@@ -1,0 +1,13 @@
+package com.chubb.repository;
+
+package com.chubb.repository;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import com.chubb.request.Product;
+
+@Repository
+public interface ProductRepository extends CrudRepository<Product, Integer>{
+	
+}

@@ -1,0 +1,9 @@
+package com.flightapp.service.impl;
+
+import com.flightapp.service.AdminService;
+
+import lombok.extern.java.log;
+
+public class AdminServiceImpl implements AdminService{
+	
+}

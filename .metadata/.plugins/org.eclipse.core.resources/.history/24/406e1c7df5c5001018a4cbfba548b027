@@ -1,0 +1,5 @@
+package com.webfluxdemo.repository;
+
+public class ProductRepository extends ReactiveCrud{
+
+}

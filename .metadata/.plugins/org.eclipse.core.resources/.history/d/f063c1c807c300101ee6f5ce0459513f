@@ -1,0 +1,16 @@
+package com.flightapp.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public class FlightInventoryItemDto {
+
+	@NotBlank
+	private String fromAirport;
+	
+	@NotBlank
+	private String toAirport;
+	
+	@NotNull
+	
+}

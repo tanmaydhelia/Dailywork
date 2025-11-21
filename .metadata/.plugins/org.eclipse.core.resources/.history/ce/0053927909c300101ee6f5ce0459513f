@@ -1,0 +1,34 @@
+package com.flightapp.dto;
+
+import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
+public class FlightInventoryItemDto {
+
+	@NotBlank
+	private String fromAirport;
+	
+	@NotBlank
+	private String toAirport;
+	
+	@NotNull
+	@DateTimeFormat(pattern = "dd/mm/yy hh:mm a")
+	private LocalDateTime departureTime;
+	
+	@NotNull
+	@DateTimeFormat(pattern = "dd/mm/yy hh:mm a")
+	private LocalDateTime arrivalTime;
+	
+	@NotNull
+	@Positive
+	private int price;
+	
+	@NotNull
+	@Positive
+	private int totalSeats;
+}

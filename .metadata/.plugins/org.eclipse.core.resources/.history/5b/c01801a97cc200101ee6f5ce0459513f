@@ -1,0 +1,122 @@
+package com.flight.entity;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
+
+@Entity
+public class Booking {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	@NotBlank
+	private String pnr;
+	
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Flight flight;
+	
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	private User user;
+	
+	@NotNull
+	@PastOrPresent
+	private LocalDateTime bookingTime;
+	
+	@NotNull
+	private LocalDate journeyDate;
+	
+	@NotNull
+	@Positive
+	private int totalAmount;
+	
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private BookingStatus status;
+	
+	@OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+	private List<Passenger> passengers = new ArrayList<>();
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getPnr() {
+		return pnr;
+	}
+
+	public void setPnr(String pnr) {
+		this.pnr = pnr;
+	}
+
+	public Flight getFlight() {
+		return flight;
+	}
+
+	public void setFlight(Flight flight) {
+		this.flight = flight;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public LocalDateTime getBookingTime() {
+		return bookingTime;
+	}
+
+	public void setBookingTime(LocalDateTime bookingTime) {
+		this.bookingTime = bookingTime;
+	}
+
+	public LocalDate getJourneyDate() {
+		return journeyDate;
+	}
+
+	public void setJourneyDate(LocalDate journeyDate) {
+		this.journeyDate = journeyDate;
+	}
+
+	public int getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(int totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public BookingStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(BookingStatus status) {
+		this.status = status;
+	}
+}

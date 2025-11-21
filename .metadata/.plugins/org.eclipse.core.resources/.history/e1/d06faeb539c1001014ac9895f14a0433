@@ -1,0 +1,6 @@
+package com.chubb.request;
+
+public class Order {
+	private String item;
+	private float price;
+}

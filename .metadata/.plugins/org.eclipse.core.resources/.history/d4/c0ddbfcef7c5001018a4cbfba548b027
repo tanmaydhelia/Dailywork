@@ -1,0 +1,38 @@
+package com.webfluxdemo.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.webfluxdemo.model.Product;
+import com.webfluxdemo.repository.ProductRepository;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+@Service
+public class ProductService {
+	
+	private final ProductRepository productReposiory;
+	
+	public Flux<Product> getAllProducts(){
+		return pr.findAll();
+	}
+	
+	public Mono<Product> getProductById(int id){
+		return pr.findById(id);
+	}
+	
+	public Flux<Product> searchByName(String name){
+		return pr.findByNameContainingIgnoringCase(name);
+	}
+	
+	public Mono<Product> saveProduct(Product product){
+		return pr.save(product);
+	}
+	
+	public Mono<Void> deleteProduct(int id){
+		return pr.deleteById(id);
+	}
+} 

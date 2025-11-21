@@ -1,0 +1,22 @@
+package com.chubb.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.chubb.repository.CustomerRepository;
+import com.chubb.request.Customer;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+public class CustomerService {
+
+	@Autowired
+    CustomerRepository customerRepository;
+    
+    public void saveCustomer(CustomerService customer) {
+        customerRepository.save(customer);
+        log.debug(customer.toString());
+    }
+}

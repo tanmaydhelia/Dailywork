@@ -1,0 +1,14 @@
+package com.flightapp.dto;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+public class FlightSummaryDto {
+
+	private int flightId;
+	private String airlineName;
+	private String airlineCode;
+	private String fromAirport;
+	private String toAirport;
+	
+	@DateTimeFormat(pattern = "dd/mm/yy hh:mm a")
+}

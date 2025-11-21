@@ -1,0 +1,21 @@
+package com.webfluxdemo.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.webfluxdemo.model.Product;
+import com.webfluxdemo.repository.ProductRepository;
+
+import reactor.core.publisher.Flux;
+
+@Service
+public class ProductService {
+	
+	private final ProductRepository pr;
+	
+	public Flux<Product> getAllProducts(){
+		
+	}
+}

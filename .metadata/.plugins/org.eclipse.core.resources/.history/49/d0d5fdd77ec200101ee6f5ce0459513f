@@ -1,0 +1,7 @@
+package com.flightapp.repository;
+
+import org.springframework.data.jpa.JpaRepository;
+
+public class UserRepository extends JpaRepository{
+
+}

@@ -1,0 +1,16 @@
+package com.chubb.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.chubb.repository.CustomerRepository;
+import com.chubb.request.Customer;
+
+public class CustomerService {
+
+	@Autowired
+    CustomerRepository customerRepository;
+    
+    public Customer saveCustomer(CustomerService customer) {
+        customerRepository.save(customer);
+    }
+}

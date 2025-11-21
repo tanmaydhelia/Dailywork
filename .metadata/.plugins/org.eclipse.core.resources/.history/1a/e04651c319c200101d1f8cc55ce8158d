@@ -1,0 +1,33 @@
+package com.chubb.controller;
+
+import static org.hamcrest.CoreMatchers.any;
+import static org.mockito.Mockito.doNothing;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+
+import com.chubb.request.Order1;
+import com.chubb.service.OrderService;
+
+@WebMvcTest(OrderController.class)
+public class orderControllerTest {
+	@Autowired
+	private MockMvc mockMvc;
+	
+	@MockBean
+	private OrderService orderService;
+	
+	
+	@Test
+	void testInsertOrder() throws Exception{
+		String orderJSON = "{\"item\":\"Test Item\",\"price\":100,\"quantity\":2}";
+		doNothing().when(orderService).insertOrder(any(Order1.class));
+		
+		mockMvc.perform(post("/order")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(orderJson))
+                .andExpect(status().isOk());
+	}
+}

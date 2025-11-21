@@ -1,0 +1,10 @@
+package com.webfluxdemo.repository;
+
+import org.springframework.boot.autoconfigure.mustache.MustacheProperties.Reactive;
+import org.springframework.stereotype.Repository;
+
+
+@Repository
+public class ProductRepository extends Reactive{
+	
+}

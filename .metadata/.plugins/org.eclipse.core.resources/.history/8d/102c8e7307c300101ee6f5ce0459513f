@@ -1,0 +1,17 @@
+package com.flightapp.dto;
+
+import java.util.List;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+
+public class AirlineInventoryRequest {
+	
+	@NotBlank
+	private String airlineCode;
+	
+	@NotEmpty
+	private List<FlightInventoryItemDto> flights;
+	
+	
+}

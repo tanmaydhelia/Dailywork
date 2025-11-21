@@ -1,0 +1,7 @@
+1763104327600	Rename package 'com.chubb'
+1763105855009	Move compilation unit
+1763106101702	Move compilation unit
+1763106588293	Rename package 'com.chubb.demo'
+1763111058660	Delete element
+1763112558603	Encapsulate field 'quantity, ...'
+1763182082211	Rename type 'Order'

@@ -1,0 +1,41 @@
+package logging;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public class Worker extends Thread{
+
+	final Logger logger = LogManager.getLogger(Worker.class);
+
+    @Override
+    public void run() {
+        String threadName = Thread.currentThread().getName();
+        long threadId = Thread.currentThread().getId();
+        
+        logger.info("Worker thread {} (ID: {}) started", threadName, threadId);
+        
+        try {
+            // Simulate some work
+            for (int i = 1; i <= 5; i++) {
+                logger.debug("Thread {} processing task {}", threadName, i);
+                
+                // Simulate work with sleep
+                Thread.sleep(1000);
+                
+                if (i == 3) {
+                    logger.warn("Thread {} encountered a warning condition at task {}", threadName, i);
+                }
+            }
+            
+            logger.info("Worker thread {} completed all tasks successfully", threadName);
+            
+        } catch (InterruptedException e) {
+            logger.error("Thread {} was interrupted: {}", threadName, e.getMessage());
+            Thread.currentThread().interrupt();
+        } catch (Exception e) {
+            logger.error("Thread {} encountered an unexpected error: {}", threadName, e.getMessage(), e);
+        }
+        
+        logger.info("Worker thread {} finished", threadName);
+    }
+}

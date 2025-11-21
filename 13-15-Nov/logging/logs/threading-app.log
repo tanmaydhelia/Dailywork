@@ -1,0 +1,19 @@
+2025-11-14 10:20:14.861 [main] INFO  logging.Main - Threading application started
+2025-11-14 10:20:14.870 [main] INFO  logging.Main - Application started at: 2025-11-14T10:20:14.863+0530
+2025-11-14 10:20:14.870 [main] INFO  logging.Main - Available CPU cores: 12
+2025-11-14 10:20:14.870 [main] INFO  logging.Main - Creating thread pool with 12 threads
+2025-11-14 10:20:14.871 [main] INFO  logging.Main - All tasks submitted to thread pool
+2025-11-14 10:20:14.871 [pool-2-thread-1] INFO  logging.Worker - Worker thread pool-2-thread-1 (ID: 27) started
+2025-11-14 10:20:14.871 [pool-2-thread-2] INFO  logging.Worker - Worker thread pool-2-thread-2 (ID: 29) started
+2025-11-14 10:20:14.871 [pool-2-thread-3] INFO  logging.Worker - Worker thread pool-2-thread-3 (ID: 31) started
+2025-11-14 10:20:17.872 [pool-2-thread-3] WARN  logging.Worker - Thread pool-2-thread-3 encountered a warning condition at task 3
+2025-11-14 10:20:17.872 [pool-2-thread-1] WARN  logging.Worker - Thread pool-2-thread-1 encountered a warning condition at task 3
+2025-11-14 10:20:17.872 [pool-2-thread-2] WARN  logging.Worker - Thread pool-2-thread-2 encountered a warning condition at task 3
+2025-11-14 10:20:19.874 [pool-2-thread-3] INFO  logging.Worker - Worker thread pool-2-thread-3 completed all tasks successfully
+2025-11-14 10:20:19.874 [pool-2-thread-1] INFO  logging.Worker - Worker thread pool-2-thread-1 completed all tasks successfully
+2025-11-14 10:20:19.874 [pool-2-thread-2] INFO  logging.Worker - Worker thread pool-2-thread-2 completed all tasks successfully
+2025-11-14 10:20:19.874 [pool-2-thread-3] INFO  logging.Worker - Worker thread pool-2-thread-3 finished
+2025-11-14 10:20:19.874 [pool-2-thread-2] INFO  logging.Worker - Worker thread pool-2-thread-2 finished
+2025-11-14 10:20:19.874 [pool-2-thread-1] INFO  logging.Worker - Worker thread pool-2-thread-1 finished
+2025-11-14 10:20:19.875 [main] INFO  logging.Main - All tasks completed successfully
+2025-11-14 10:20:19.875 [main] INFO  logging.Main - Threading application finished

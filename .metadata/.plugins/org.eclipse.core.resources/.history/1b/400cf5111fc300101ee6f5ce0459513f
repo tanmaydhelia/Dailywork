@@ -1,0 +1,58 @@
+package com.flightapp.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.flightapp.dto.AirlineInventoryRequest;
+import com.flightapp.dto.AirlineInventoryResponse;
+import com.flightapp.dto.FlightInventoryItemDto;
+import com.flightapp.entity.Airline;
+import com.flightapp.entity.Flight;
+import com.flightapp.repository.AirlineRepository;
+import com.flightapp.repository.FlightRepository;
+import com.flightapp.service.AdminService;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+public class AdminServiceImpl implements AdminService{
+	private final AirlineRepository airlineRepositroy;
+	private final FlightRepository flightRepository;
+	
+	public AdminServiceImpl(AirlineRepository airlineRepositroy, FlightRepository flightRepository) {
+		this.airlineRepositroy = airlineRepositroy;
+		this.flightRepository = flightRepository;
+	}
+
+	@Override
+	@Transactional
+	public AirlineInventoryResponse addInventory(AirlineInventoryRequest request) {
+		String airlineCode = request.getAirlineCode();
+		log.info("Adding inventory for airlineCode={} with {} flights", airlineCode, request.getFlights().size());
+		
+		Airline airline  = airlineRepositroy.findByCode(airlineCode).orElseThrow(()-> new ResourceNotFoundException("Airline not found with Code: "+airlineCode));
+		
+		List<Flight> flightstoSave = new ArrayList<>();
+		
+		for(FlightInventoryItemDto item : request.getFlights()){
+			validateFlightInventoryItem(item);
+			
+			Flight flight = new Flight();
+			flight.setAirline(airline);
+			flight.setFromAirport(item.getFromAirport());
+			flight.setToAirport(item.getToAirport());
+			flight.setDepartureTime(item.getDepartureTime());
+			flight.setArrivalTime(item.getDepartureTime());
+			flight.setPrice(item.getPrice());
+		}
+	}
+	
+	//try_catch not recommended
+	
+	
+}

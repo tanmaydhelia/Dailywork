@@ -1,0 +1,33 @@
+package com.flightapp.dto;
+
+import java.util.List;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
+public class BookingRequest {
+
+	@NotBlank
+	private String name;
+	
+	@NotBlank
+	@Email
+	private String email;
+	
+	@NotNull
+	private TripType tripType;
+	
+	private int returnFlightId;
+	
+	@NotNull
+	@Positive
+	private int numberOfSeats;
+	
+	@NotEmpty
+	@Valid
+	private List<PassengerRequest> passengers;
+}

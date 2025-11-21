@@ -1,0 +1,26 @@
+package com.chubb.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.chubb.request.Order;
+
+import jakarta.validation.Valid;
+
+@RestController
+public class OrderController {
+	
+	@GetMapping("/order")
+	public String getOrder() {
+		// TODO Auto-generated method stub
+		return "Order GET req!!!";
+	}
+	
+	@PostMapping("/order")
+	int saveOrder(@RequestBody @Valid Order order) {
+//		return (int)order.getPrice() * order.getQuantity();
+		return order.get;
+	}
+}

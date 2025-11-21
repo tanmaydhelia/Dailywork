@@ -1,0 +1,11 @@
+package com.webfluxdemo.controller;
+
+import org.springframework.stereotype.Controller;
+
+import com.webfluxdemo.service.ProductService;
+
+@Controller
+public class ProductController {
+	private ProductService ps;
+	
+}

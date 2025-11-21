@@ -1,0 +1,30 @@
+package com.webfluxdemo.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.webfluxdemo.model.Product;
+import com.webfluxdemo.service.ProductService;
+
+import reactor.core.publisher.Flux;
+
+@Controller
+public class ProductController {
+	private ProductService ps;
+	
+	public ProductController(ProductService productService) {
+        this.ps = productService;
+    }
+	
+	@GetMapping("/{id}")
+	public Flux<Product> getAllProducts(){
+		return ps.getAllProducts();
+	}
+	
+	@GetMapping("/search")
+	public Flux<Product> searchProducts(@RequestParam String name){
+		return ps.searchByName(name);
+	}
+	
+}

@@ -1,0 +1,8 @@
+package com.chubb.controller;
+
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+
+@WebMvcTest(OrderController.class)
+public class orderControllerTest {
+	
+}

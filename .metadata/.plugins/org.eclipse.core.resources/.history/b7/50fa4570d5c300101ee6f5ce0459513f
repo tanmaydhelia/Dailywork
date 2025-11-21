@@ -1,0 +1,166 @@
+package com.flightapp.exception;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.stream.Collectors;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    // ========== 404 NOT FOUND ==========
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFoundException ex,
+                                                                HttpServletRequest request) {
+        log.warn("Resource not found: {}", ex.getMessage());
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        ErrorResponse body = new ErrorResponse(
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(body, status);
+    }
+
+    // ========== 409 CONFLICT / 400 for seat conflicts ==========
+
+    @ExceptionHandler(SeatNotAvailableException.class)
+    public ResponseEntity<ErrorResponse> handleSeatNotAvailable(SeatNotAvailableException ex,
+                                                                HttpServletRequest request) {
+        log.warn("Seat not available: {}", ex.getMessage());
+        HttpStatus status = HttpStatus.CONFLICT; // or BAD_REQUEST if you prefer
+        ErrorResponse body = new ErrorResponse(
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(body, status);
+    }
+
+    // ========== 400 BAD REQUEST (cancellation rule) ==========
+
+    @ExceptionHandler(CancellationNotAllowedException.class)
+    public ResponseEntity<ErrorResponse> handleCancellationNotAllowed(CancellationNotAllowedException ex,
+                                                                      HttpServletRequest request) {
+        log.warn("Cancellation not allowed: {}", ex.getMessage());
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ErrorResponse body = new ErrorResponse(
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(body, status);
+    }
+
+    // ========== 400 BAD REQUEST (validation @Valid on @RequestBody) ==========
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidationErrors(MethodArgumentNotValidException ex,
+                                                                HttpServletRequest request) {
+        String fieldErrors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(this::formatFieldError)
+                .collect(Collectors.joining("; "));
+
+        log.warn("Validation failed: {}", fieldErrors);
+
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ErrorResponse body = new ErrorResponse(
+                status.value(),
+                status.getReasonPhrase(),
+                fieldErrors,
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(body, status);
+    }
+
+    private String formatFieldError(FieldError fe) {
+        return fe.getField() + " " + (fe.getDefaultMessage() != null ? fe.getDefaultMessage() : "is invalid");
+    }
+
+    // ========== 400 BAD REQUEST (validation on path params / query params) ==========
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorResponse> handleConstraintViolation(ConstraintViolationException ex,
+                                                                   HttpServletRequest request) {
+        String message = ex.getConstraintViolations()
+                .stream()
+                .map(v -> v.getPropertyPath() + " " + v.getMessage())
+                .collect(Collectors.joining("; "));
+
+        log.warn("Constraint violation: {}", message);
+
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ErrorResponse body = new ErrorResponse(
+                status.value(),
+                status.getReasonPhrase(),
+                message,
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(body, status);
+    }
+
+    // ========== 400 BAD REQUEST (invalid JSON body etc.) ==========
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
+                                                                      HttpServletRequest request) {
+        log.warn("Malformed JSON request: {}", ex.getMessage());
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ErrorResponse body = new ErrorResponse(
+                status.value(),
+                status.getReasonPhrase(),
+                "Malformed JSON request",
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(body, status);
+    }
+
+    // ========== 400 BAD REQUEST (generic invalid argument in service) ==========
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex,
+                                                               HttpServletRequest request) {
+        log.warn("Illegal argument: {}", ex.getMessage());
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ErrorResponse body = new ErrorResponse(
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(body, status);
+    }
+
+    // ========== 500 INTERNAL SERVER ERROR (fallback) ==========
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleGenericException(Exception ex,
+                                                                HttpServletRequest request) {
+        log.error("Unexpected error", ex);
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        ErrorResponse body = new ErrorResponse(
+                status.value(),
+                status.getReasonPhrase(),
+                "An unexpected error occurred",
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(body, status);
+    }
+}
