@@ -13,6 +13,7 @@ import com.micro.quizservice.model.Quiz;
 import com.micro.quizservice.model.Response;
 import com.micro.quizservice.repository.QuizRepo;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -25,6 +26,7 @@ public class QuizService {
 	@Autowired
 	QuizInterface quizInterface;
 
+	@CircuitBreaker(name = "QuestionServiceBreaker", fallbackMethod = "fallbackForCreateQuiz")
 	public ResponseEntity<String> createQuiz(String category, Integer numQ, String title) {
 		
 //		RestTemplate
@@ -42,6 +44,10 @@ public class QuizService {
 		
 		return new ResponseEntity<>("Success",HttpStatus.CREATED);
 	}
+	
+	public ResponseEntity<String> fallbackForCreateQuiz(String category, int numQ, String title, Throwable t) {
+        return new ResponseEntity<>("Question Service is down. Please try again later.", HttpStatus.SERVICE_UNAVAILABLE);
+    }
 
 	public ResponseEntity<List<QuestionWrapper>> getQuiz(String quizId) {
        Quiz quiz = quizRepo.findById(quizId).get();
